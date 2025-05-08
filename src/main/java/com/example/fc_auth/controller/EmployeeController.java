@@ -3,6 +3,7 @@ package com.example.fc_auth.controller;
 import com.example.fc_auth.model.Employee;
 import com.example.fc_auth.repository.EmployeeRepository;
 import com.example.fc_auth.service.EmployeeService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Department", description = "Department API")
 public class EmployeeController {
 
   private final EmployeeService employeeService;
