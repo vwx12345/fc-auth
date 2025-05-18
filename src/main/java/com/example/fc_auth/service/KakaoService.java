@@ -3,12 +3,9 @@ package com.example.fc_auth.service;
 import com.example.fc_auth.model.KakaoTokenRespDto;
 import com.example.fc_auth.model.KakaoUserInfoRespDto;
 import com.example.fc_auth.repository.EmployeeRepository;
-import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpHeaders;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
