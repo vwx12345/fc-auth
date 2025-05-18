@@ -1,6 +1,9 @@
 package com.example.fc_auth.config;
 
 import com.example.fc_auth.filter.JwtAuthFilter;
+import com.example.fc_auth.repository.EmployeeRepository;
+import com.example.fc_auth.service.KakaoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -11,12 +14,20 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity //spring security의 bean임을 알려주는 것
 public class SecurityConfig {
+
+  private final KakaoService kakaoService;
+  private final EmployeeRepository employeeRepository;
+  private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
   private static final String[] ALLOWLIST = {
       "/v3/**",
       "/swagger-ui/**",
+      "/kakao/**",
+      "/images/**",
   };
 
   @Bean
@@ -30,12 +41,14 @@ public class SecurityConfig {
 
     http.formLogin(AbstractHttpConfigurer::disable); // formLogin 비활성화(user password 사용 안하기 위해서)
 
-    http.addFilterBefore(new JwtAuthFilter(), UsernamePasswordAuthenticationFilter.class); // filter가 적용될 위치
+    http.addFilterBefore(new JwtAuthFilter(kakaoService, employeeRepository), UsernamePasswordAuthenticationFilter.class); // filter가 적용될 위치
 
     http.authorizeHttpRequests(authorize
         -> authorize
         .requestMatchers(ALLOWLIST).permitAll() // ALLOWLIST에 있는 값들은 허용
         .anyRequest().authenticated()); // 모든 요청에 적용되게 설정
+
+    http.exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint));
 
     return http.build();
   }

@@ -4,17 +4,20 @@ import com.example.fc_auth.model.Employee;
 import com.example.fc_auth.repository.EmployeeRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EmployeeService {
 
   private final EmployeeRepository employeeRepository;
 
   public List<Employee> getAllEmployees() {
+    String name = SecurityContextHolder.getContext().getAuthentication().getName();
+    log.info("name:" + name);
     return employeeRepository.findAll();
   }
 
