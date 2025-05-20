@@ -1,6 +1,7 @@
 package com.example.fc_auth.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +33,7 @@ public class Employee {
 
   private String kakaoNickName;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
       name = "employee_role_mapping",
       joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"),
@@ -40,5 +41,7 @@ public class Employee {
   )
   private Set<Role> roles;
 
-
+  public static boolean isHR(Employee employee) {
+    return employee.getRoles().stream().anyMatch(role -> role.getName().equals("인사팀"));
+  }
 }

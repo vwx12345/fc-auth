@@ -3,6 +3,7 @@ package com.example.fc_auth.controller;
 import com.example.fc_auth.model.KakaoUserInfoRespDto;
 import com.example.fc_auth.service.KakaoService;
 import com.example.fc_auth.service.LoginService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,11 +14,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/kakao")
 @RequiredArgsConstructor
+@Tag(name = "Login", description = "Kakao Login API")
 public class KakaoLoginController {
 
   private final LoginService loginService;

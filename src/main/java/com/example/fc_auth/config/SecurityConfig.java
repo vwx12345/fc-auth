@@ -22,6 +22,7 @@ public class SecurityConfig {
   private final KakaoService kakaoService;
   private final EmployeeRepository employeeRepository;
   private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+  private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
   private static final String[] ALLOWLIST = {
       "/v3/**",
@@ -45,10 +46,15 @@ public class SecurityConfig {
 
     http.authorizeHttpRequests(authorize
         -> authorize
+        .requestMatchers("/admin/**").hasRole("ADMIN") // Admin이 Role이 있는 사람만 접근 가능
+        .requestMatchers("/employees/**").hasRole("USER")
+        .requestMatchers("/departments/**").hasRole("USER")
         .requestMatchers(ALLOWLIST).permitAll() // ALLOWLIST에 있는 값들은 허용
         .anyRequest().authenticated()); // 모든 요청에 적용되게 설정
 
-    http.exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint));
+    http.exceptionHandling(exceptionHandling
+        -> exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint) // Authentication 에러일 때, 여기서 처리
+        .accessDeniedHandler(customAccessDeniedHandler)); // AccessDenied 에러일 때, 여기서 처리
 
     return http.build();
   }

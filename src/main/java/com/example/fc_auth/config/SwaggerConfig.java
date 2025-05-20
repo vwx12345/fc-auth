@@ -31,7 +31,7 @@ public class SwaggerConfig {
     return new SecurityScheme()
         .type(SecurityScheme.Type.HTTP)
         .bearerFormat("JWT")
-        .scheme("bearer");
+        .scheme("bearer"); // 이것 덕분에 bearer 추가 안해도 됨
   }
 
 }
