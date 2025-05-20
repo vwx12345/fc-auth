@@ -39,9 +39,9 @@ public class Employee {
       joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
   )
-  private Set<Role> roles;
+  private Set<EmployeeRole> employeeRoles;
 
   public static boolean isHR(Employee employee) {
-    return employee.getRoles().stream().anyMatch(role -> role.getName().equals("인사팀"));
+    return employee.getEmployeeRoles().stream().anyMatch(employeeRole -> employeeRole.getName().equals("인사팀"));
   }
 }

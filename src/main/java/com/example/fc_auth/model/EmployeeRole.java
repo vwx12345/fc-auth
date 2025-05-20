@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Role {
+public class EmployeeRole {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
