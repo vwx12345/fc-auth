@@ -18,7 +18,7 @@ class JwtUtilTest {
         .kakaoNickName("nickName")
         .build();
 
-    String token = JwtUtil.createToken(employee);
+    String token = JwtUtil.createUserToken(employee);
 
     assertEquals("nickName", JwtUtil.parseToken(token).get("nickname"));
 
@@ -40,7 +40,7 @@ class JwtUtilTest {
         .employeeRoles(employeeRoleSet)
         .build();
 
-    String token = JwtUtil.createToken(employee);
+    String token = JwtUtil.createUserToken(employee);
 
     List res = JwtUtil.parseToken(token).get("roles", List.class);
 

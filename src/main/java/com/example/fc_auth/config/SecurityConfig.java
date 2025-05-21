@@ -29,6 +29,7 @@ public class SecurityConfig {
       "/swagger-ui/**",
       "/kakao/**",
       "/images/**",
+      "/app/token/**"
   };
 
   @Bean
